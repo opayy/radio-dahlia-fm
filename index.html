@@ -54,6 +54,23 @@
   footer p { margin:4px 0; }
 
   @media (max-width:800px) { .hero { grid-template-columns:1fr; } nav a { margin:0 12px 0 0; } }
+/* ANNOUNCER */
+.pen-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; }
+.pen-kartu { border:0; padding:0; background:var(--utama); border-radius:14px; overflow:hidden; cursor:pointer; aspect-ratio:3/4; transition:transform .2s; }
+.pen-kartu:hover { transform:translateY(-4px); }
+.pen-kartu img { width:100%; height:100%; object-fit:cover; display:block; }
+
+.pen-modal { position:fixed; inset:0; background:rgba(0,0,0,.75); display:none; align-items:center; justify-content:center; padding:20px; z-index:50; }
+.pen-modal.buka { display:flex; }
+.pen-isi { background:#2a2a2a; border-radius:16px; padding:24px; max-width:900px; width:100%; max-height:90vh; overflow:auto; display:flex; gap:24px; position:relative; }
+.pen-isi img { width:280px; max-width:40%; aspect-ratio:3/4; object-fit:cover; border-radius:12px; align-self:flex-start; }
+.pen-isi h3 { font-family:'Poppins',Arial,sans-serif; font-size:22px; margin-top:14px; }
+.pen-isi h3:first-child { margin-top:0; }
+.pen-isi p { margin-top:4px; opacity:.9; }
+.pen-isi a { color:var(--kuning); }
+.pen-tutup { position:absolute; top:10px; right:14px; background:none; border:0; color:#fff; font-size:30px; cursor:pointer; }
+@media (max-width:700px) { .pen-isi { flex-direction:column; } .pen-isi img { width:100%; max-width:100%; } }
+  
 </style>
 </head>
 <body>
@@ -122,13 +139,23 @@
 </div>
 
 <!-- PENYIAR -->
-<div class="wadah tengah penyiar" id="penyiar">
-  <h2>Announcer</h2>
-  <div class="grid">
-    <div class="foto">GANTI Nama 1</div>
-    <div class="foto">GANTI Nama 2</div>
-    <div class="foto">GANTI Nama 3</div>
-    <div class="foto">GANTI Nama 4</div>
+<div class="wadah" id="penyiar">
+  <h2 style="text-align:center">Announcer</h2>
+  <div class="pen-grid" id="penGrid"></div>
+</div>
+
+<div class="pen-modal" id="penModal">
+  <div class="pen-isi">
+    <button class="pen-tutup" id="penTutup" aria-label="Tutup">&times;</button>
+    <img id="penFoto" src="" alt="">
+    <div>
+      <h3>Nama :</h3>
+      <p id="penNama"></p>
+      <h3>Social Media :</h3>
+      <p id="penSosmed"></p>
+      <h3>Bio :</h3>
+      <p id="penBio"></p>
+    </div>
   </div>
 </div>
 
@@ -182,6 +209,36 @@
   });
   const g = new Date().getDay();
   tampil(hari[g === 0 ? 6 : g - 1]);
+</script>
+  <script>
+var penyiar = [
+  { nama:"Adri",      foto:"penyiar-adri.jpg",      ig:"", bio:"Penyiar Radio Dahlia" },
+  { nama:"Baby Alia", foto:"penyiar-baby-alia.jpg", ig:"", bio:"Penyiar Radio Dahlia" },
+  { nama:"Ranti",     foto:"penyiar-ranti.jpg",     ig:"", bio:"Penyiar Radio Dahlia" }
+];
+
+var grid = document.getElementById('penGrid');
+var modal = document.getElementById('penModal');
+
+penyiar.forEach(function(p){
+  var b = document.createElement('button');
+  b.className = 'pen-kartu';
+  b.innerHTML = '<img src="'+p.foto+'" alt="'+p.nama+'">';
+  b.onclick = function(){
+    document.getElementById('penFoto').src = p.foto;
+    document.getElementById('penNama').textContent = p.nama;
+    document.getElementById('penBio').textContent = p.bio;
+    document.getElementById('penSosmed').innerHTML = p.ig
+      ? '<a href="https://instagram.com/'+p.ig+'" target="_blank">@'+p.ig+'</a>' : '-';
+    modal.classList.add('buka');
+  };
+  grid.appendChild(b);
+});
+
+function tutupModal(){ modal.classList.remove('buka'); }
+document.getElementById('penTutup').onclick = tutupModal;
+modal.onclick = function(e){ if(e.target === modal) tutupModal(); };
+document.addEventListener('keydown', function(e){ if(e.key === 'Escape') tutupModal(); });
 </script>
 </body>
 </html>
