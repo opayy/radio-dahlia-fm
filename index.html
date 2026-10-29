@@ -193,15 +193,93 @@
 
 <script>
   const hari = ["Senin","Selasa","Rabu","Kamis","Jumat","Sabtu","Minggu"];
-  const contoh = [
-    ["06.00 - 09.00","GANTI nama program"],
-    ["09.00 - 12.00","GANTI nama program"],
-    ["12.00 - 15.00","GANTI nama program"]
-  ];
-  // Semua hari memakai jadwal contoh. Untuk mengubah satu hari, tulis misalnya:
-  // jadwal["Senin"] = [["06.00 - 09.00","Nama Program"],["09.00 - 12.00","Nama Program"]];
-  const jadwal = {};
-  hari.forEach(h => jadwal[h] = contoh);
+  const J = (jam, program, penyiar) => [jam, program + " • " + penyiar];
+
+const senSel = [
+  J("00.00 - 03.00","Bergadang","Jaya Pucung"),
+  J("03.00 - 04.00","Goyang Priangan","Tanpa Penyiar"),
+  J("04.00 - 06.00","Obsesi Pagi","Bang Apul & Ust Andi"),
+  J("06.00 - 08.00","Kopi Dangdut Dahlia","Erlan"),
+  J("08.00 - 10.00","Bandar Dangdut Dahlia","Sansan"),
+  J("10.00 - 11.00","Dongeng Sunda","Deden Mery"),
+  J("11.00 - 13.00","Dahlia Tatar Sunda","Abah Ndin & Teh Amel"),
+  J("13.00 - 15.00","Dahlia Indonesia Pilihan","Baby Alia"),
+  J("15.00 - 16.00","Dahlia Indonesia Pilihan Nonstop","Tanpa Penyiar"),
+  J("16.00 - 18.00","Dahlia Indonesia Asik","Ricky Luven"),
+  J("18.00 - 20.00","Kontak Indonesia Pop","Enno Riri"),
+  J("20.00 - 22.00","Yang Digoyang","Minul"),
+  J("22.00 - 24.00","Mandi Madu Dahlia","Andri Vie")
+];
+
+const rabKam = [
+  J("00.00 - 03.00","Bergadang","Ranti"),
+  J("03.00 - 04.00","Goyang Priangan","Tanpa Penyiar"),
+  J("04.00 - 06.00","Obsesi Pagi","Bang Apul & Ust Andi"),
+  J("06.00 - 08.00","Kopi Dangdut Dahlia","Erlan"),
+  J("08.00 - 10.00","Bandar Dangdut Dahlia","Putri Barbie"),
+  J("10.00 - 11.00","Dongeng Sunda","Deden Mery"),
+  J("11.00 - 13.00","Dahlia Tatar Sunda","Abah Ndin & Dedah"),
+  J("13.00 - 15.00","Dahlia Indonesia Pilihan","Baby Alia"),
+  J("15.00 - 16.00","Dahlia Indonesia Pilihan Nonstop","Tanpa Penyiar"),
+  J("16.00 - 18.00","Dahlia Indonesia Asik","Ricky Luven"),
+  J("18.00 - 20.00","Kontak Indonesia Pop","Enno Riri"),
+  J("20.00 - 22.00","Yang Digoyang","Minul"),
+  J("22.00 - 24.00","Mandi Madu Dahlia","Andri Vie")
+];
+
+const jumat = [
+  J("00.00 - 03.00","Bergadang","Jaya Pucung"),
+  J("03.00 - 04.00","Goyang Priangan","Tanpa Penyiar"),
+  J("04.00 - 06.00","Obsesi Pagi","Tommy & Ust Taufiq"),
+  J("06.00 - 08.00","Kopi Dangdut Dahlia","Adri"),
+  J("08.00 - 10.00","Bandar Dangdut Dahlia","Putri Barbie"),
+  J("10.00 - 11.00","Dongeng Sunda","Deden Mery"),
+  J("11.00 - 13.00","Dahlia Tatar Sunda","Teh Amel"),
+  J("13.00 - 15.00","Dahlia Indonesia Pilihan","Ranti"),
+  J("15.00 - 16.00","Dahlia Indonesia Pilihan Nonstop","Tanpa Penyiar"),
+  J("16.00 - 18.00","Dahlia Indonesia Asik","Ricky Luven"),
+  J("18.00 - 20.00","Kontak Indonesia Pop","Enno Riri"),
+  J("20.00 - 22.00","Yang Digoyang","Minul"),
+  J("22.00 - 24.00","Mandi Madu Dahlia","Idoy")
+];
+
+const sabtu = [
+  J("00.00 - 03.00","Bergadang","Jaya Pucung"),
+  J("03.00 - 04.00","Goyang Priangan","Tanpa Penyiar"),
+  J("04.00 - 06.00","Obsesi Pagi","Tommy & Ust Taufiq"),
+  J("06.00 - 08.00","Kopi Dangdut Dahlia","Adri"),
+  J("08.00 - 10.00","Bandar Dangdut Dahlia","Putri Barbie"),
+  J("10.00 - 11.00","Dongeng Sunda","Deden Mery"),
+  J("11.00 - 13.00","Dahlia Tatar Sunda","Dedah & Oni"),
+  J("13.00 - 15.00","Dahlia Indonesia Pilihan","Ranti"),
+  J("15.00 - 16.00","Dahlia Indonesia Pilihan Nonstop","Tanpa Penyiar"),
+  J("16.00 - 18.00","Cari Jodoh Di Dahlia","Andri Vie"),
+  J("18.00 - 20.00","Kontak Indonesia Pop","Enno Riri"),
+  J("20.00 - 22.00","Wakuncar Dahlia","Adri"),
+  J("22.00 - 24.00","Goyang Pantura","Idoy")
+];
+
+const minggu = [
+  J("00.00 - 03.00","Wayang Golek","Tanpa Penyiar"),
+  J("03.00 - 04.00","Goyang Priangan","Tanpa Penyiar"),
+  J("04.00 - 06.00","Obsesi Pagi","Tommy & Ust Taufiq"),
+  J("06.00 - 08.00","Godain Dahlia","Sansan & Putri Barbie"),
+  J("08.00 - 10.00","Top Dangdut Dahlia","Minul"),
+  J("10.00 - 11.00","Cepot Ngagoda Dahlia","Senda Riwanda"),
+  J("11.00 - 13.00","Karmila","Putri Barbie"),
+  J("13.00 - 15.00","Top Hits Dahlia","Enno Riri"),
+  J("15.00 - 16.00","Dahlia Indonesia Pilihan Nonstop","Tanpa Penyiar"),
+  J("16.00 - 18.00","Cindai Dahlia","Adri"),
+  J("18.00 - 20.00","Maung Garuda","Baby Alia"),
+  J("20.00 - 22.00","Panggung Dangdut Dahlia","Tommy"),
+  J("22.00 - 24.00","Goyang Pantura","Idoy")
+];
+
+const jadwal = {
+  "Senin": senSel, "Selasa": senSel,
+  "Rabu": rabKam, "Kamis": rabKam,
+  "Jumat": jumat, "Sabtu": sabtu, "Minggu": minggu
+};
 
   const tabs = document.getElementById("tabs");
   const isi = document.getElementById("isi-jadwal");
