@@ -175,6 +175,57 @@
   }
 }
 
+  /* ==========================================
+   FIX #3: Paksa poster & video full width
+   ========================================== */
+
+.hero > .next-program-box {
+  display: flex !important;
+  flex-direction: column;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.hero > .next-program-box img,
+.hero > .next-program-box #next-posters {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  border-radius: 12px;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.hero > .mre {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.hero > .mre > div,
+.hero > .mre > .video-wadah {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+.hero > .mre .video,
+.hero > .mre .video iframe,
+.hero > .mre iframe {
+  width: 100% !important;
+  max-width: 100% !important;
+  aspect-ratio: 16 / 9;
+  display: block;
+}
+
+.hero {
+  gap: 20px;
+}
+
+.hero > h2.section-title {
+  text-align: left !important;
+  margin: 0 0 12px 0 !important;
+}
+
 
 
 </style>
