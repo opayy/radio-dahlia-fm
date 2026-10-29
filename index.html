@@ -70,7 +70,9 @@
 .pen-isi a { color:var(--kuning); }
 .pen-tutup { position:absolute; top:10px; right:14px; background:none; border:0; color:#fff; font-size:30px; cursor:pointer; }
 @media (max-width:700px) { .pen-isi { flex-direction:column; } .pen-isi img { width:100%; max-width:100%; } }
-  
+  /* VIDEO TWITCH */
+.video { position:relative; aspect-ratio:16/9; border:3px solid #fff; border-radius:14px; overflow:hidden; background:#000; }
+.video iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
 </style>
 </head>
 <body>
@@ -92,14 +94,9 @@
   <div class="onair">ON AIR</div>
   <div class="hero">
     <div>
-      <div class="player">
-        <h3>Radio Dahlia FM Bandung</h3>
-        <p>Prung ahh GoGoGo Goyang | 101,5 FM</p>
-        <!-- GANTI link streaming resmi dari pihak radio (harus https) -->
-        <audio controls>
-          <source src="https://GANTI-LINK-STREAMING" type="audio/mpeg">
-        </audio>
-      </div>
+    <div class="video">
+  <iframe src="https://player.twitch.tv/?channel=radiodahliafmbandung&amp;parent=opayy.github.io&amp;autoplay=false" allowfullscreen></iframe>
+</div>
       <div class="tombol">
         <a href="#beranda">Dengarkan</a>
         <a href="https://wa.me/628112221015?text=Halo%20Dahlia%20FM%2C%20saya%20mau%20request%20lagu%3A%20" target="_blank">Request Lagu</a>
