@@ -239,6 +239,36 @@
   max-width: 100% !important;
   box-sizing: border-box !important;
 }
+/* ==========================================
+   FIX #9: Badge ON AIR kembali kecil & rapi
+   ========================================== */
+
+/* Badge ON AIR: jangan full width, tetap kecil */
+.hero ~ .onal,
+.wasan#beranda > .onal,
+#beranda > .onal,
+.onal {
+  width: auto !important;
+  max-width: fit-content !important;
+  display: inline-block !important;
+  margin-bottom: 16px !important;
+}
+
+/* Judul NEXT PROGRAM: naikkan sejajar atas video */
+.hero > h2.section-title,
+.hero .section-title {
+  align-self: start !important;
+  margin-top: 0 !important;
+  margin-bottom: 12px !important;
+  /* Supaya sejajar dengan video bagian atas */
+  position: relative !important;
+  top: 0 !important;
+}
+
+/* Beri sedikit padding di section biar tidak terlalu mepet */
+.wasan#beranda {
+  padding: 20px !important;
+}
 
 
 </style>
