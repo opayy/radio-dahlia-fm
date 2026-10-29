@@ -90,61 +90,49 @@
 .baris.sekarang span::after { content:"● ON AIR"; margin-left:12px; background:var(--kuning); color:#000; font-size:12px; font-weight:600; padding:2px 10px; border-radius:20px; }
   /* ==========================================
    FIX: Next Program di kanan video
+ /* ==========================================
+   FIX: Next Program di kanan video
+   Grid 2 kolom di .hero
    ========================================== */
-.wasan#beranda {
+.hero {
   display: grid;
   grid-template-columns: 2fr 1fr;
-  grid-template-rows: auto auto auto;
+  grid-template-rows: auto auto;
   grid-template-areas:
-    "onair    next-title"
-    "video    next-poster"
-    "info     info";
+    "video  next-title"
+    "video  next-poster";
   gap: 24px;
   align-items: start;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 24px 20px;
-}
-
-/* Badge ON AIR → kiri atas */
-.wasan#beranda > .onal {
-  grid-area: onair;
-}
-
-/* Video + Tombol → kiri */
-.wasan#beranda > .mre {
-  grid-area: video;
 }
 
 /* Judul "Next Program" → kanan atas */
-.wasan#beranda > h2.section-title {
+.hero > h2.section-title {
   grid-area: next-title;
   margin: 0;
 }
 
 /* Poster Next Program → kanan bawah judul */
-.wasan#beranda > .next-program-box {
+.hero > .next-program-box {
   grid-area: next-poster;
   margin: 0;
 }
 
-/* Info terbaru → bawah full width */
-.wasan#beranda > .terang#info {
-  grid-area: info;
+/* Video + tombol → kolom kiri */
+.hero > .mre {
+  grid-area: video;
 }
 
 /* --- RESPONSIVE: HP 1 kolom --- */
 @media (max-width: 768px) {
-  .wasan#beranda {
+  .hero {
     grid-template-columns: 1fr;
     grid-template-areas:
-      "onair"
       "video"
       "next-title"
-      "next-poster"
-      "info";
+      "next-poster";
   }
 }
+
 
 </style>
 </head>
