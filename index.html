@@ -82,6 +82,12 @@
 .video-wadah.mini .mini-tutup { display:block; }
 .video-wadah.mini-ditutup .video { position:absolute; inset:0; width:auto; height:auto; left:0; bottom:auto; box-shadow:none; border-color:#fff; }
 @media (max-width:700px) { .video-wadah.mini .video { width:200px; height:113px; left:10px; bottom:10px; } }
+
+/* JADWAL: ACARA SEDANG TAYANG */
+.baris.sudah { opacity:.45; }
+.baris.sekarang { background:var(--utama); }
+.baris.sekarang b, .baris.sekarang span { color:#fff; }
+.baris.sekarang span::after { content:"● ON AIR"; margin-left:12px; background:var(--kuning); color:#000; font-size:12px; font-weight:600; padding:2px 10px; border-radius:20px; }
 </style>
 </head>
 <body>
@@ -284,18 +290,43 @@ const jadwal = {
   const tabs = document.getElementById("tabs");
   const isi = document.getElementById("isi-jadwal");
 
-  function tampil(h) {
-    isi.innerHTML = jadwal[h].map(j => '<div class="baris"><b>' + j[0] + '</b><span>' + j[1] + '</span></div>').join("");
-    [...tabs.children].forEach(b => b.classList.toggle("aktif", b.textContent === h));
-  }
+function nowWIB() {
+  const p = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Jakarta", weekday: "long", hour: "2-digit", minute: "2-digit", hour12: false
+  }).formatToParts(new Date());
+  const get = t => p.find(x => x.type === t).value;
+  const idx = {Monday:0,Tuesday:1,Wednesday:2,Thursday:3,Friday:4,Saturday:5,Sunday:6}[get("weekday")];
+  return { hari: hari[idx], menit: (parseInt(get("hour")) % 24) * 60 + parseInt(get("minute")) };
+}
+
+function tampil(h) {
+  const now = nowWIB();
+  const hariIni = (h === now.hari);
+  isi.innerHTML = jadwal[h].map(j => {
+    const m = j[0].match(/(\d+)\.(\d+)\s*-\s*(\d+)\.(\d+)/);
+    const mulai = +m[1] * 60 + +m[2];
+    const selesai = +m[3] * 60 + +m[4];
+    let kelas = "baris";
+    if (hariIni) {
+      if (now.menit >= mulai && now.menit < selesai) kelas += " sekarang";
+      else if (now.menit >= selesai) kelas += " sudah";
+    }
+    return '<div class="' + kelas + '"><b>' + j[0] + '</b><span>' + j[1] + '</span></div>';
+  }).join("");
+  [...tabs.children].forEach(b => b.classList.toggle("aktif", b.textContent === h));
+}
+
+setInterval(() => {
+  const a = [...tabs.children].find(b => b.classList.contains("aktif"));
+  if (a) tampil(a.textContent);
+}, 60000);
   hari.forEach(h => {
     const b = document.createElement("button");
     b.textContent = h;
     b.onclick = () => tampil(h);
     tabs.appendChild(b);
   });
-  const g = new Date().getDay();
-  tampil(hari[g === 0 ? 6 : g - 1]);
+ tampil(nowWIB().hari);
 </script>
   <script>
 var penyiar = [
