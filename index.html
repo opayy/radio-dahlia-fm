@@ -121,11 +121,27 @@
         <a href="https://wa.me/628176901015?text=Halo%20Admin%20Dahlia%20FM%2C%20saya%20mau%20menyampaikan%20saran%2Fkendala%3A%20" target="_blank">Hubungi Kami</a>
       </div>
     </div>
-    <div class="berikut">
-      <h2>Next Program</h2>
-      <div class="gambar">GANTI: nama program berikutnya<br>jam siaran</div>
-    </div>
+    <h2 class="section-title">Next Program</h2>
+<div class="next-program-box">
+  <img id="next-posters"
+       src="img/program/prog-bergadang.jpg"
+       alt="Program Berikutnya"
+       style="width:100%; height:auto; aspect-ratio:16/9;
+              object-fit:cover; border-radius:12px; display:block;">
+
+  <div style="margin-top:12px;">
+    <p id="next-nama"
+       style="font-weight:700; font-size:1.1rem; margin:0; color:#fff;">
+      Loading...
+    </p>
+    <p id="next-info"
+       style="font-size:0.85rem; color:#bbb; margin:4px 0 0;">
+      -
+    </p>
   </div>
+</div>
+</div>
+
 </div>
 
 <!-- INFO -->
@@ -383,5 +399,8 @@ document.addEventListener('keydown', function(e){ if(e.key === 'Escape') tutupMo
   cek();
 })();
 </script>
+
+<script src="jadwal.js"></script>
+<script src="next-program.js"></script>
 </body>
 </html>
