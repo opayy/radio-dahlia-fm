@@ -309,17 +309,13 @@
   border-radius: 8px;
 }
 
-/* 4. Padding section biar rapi */
-.wasan#beranda {
-  padding: 20px !important;
-}
-
-/* 5. Video & poster tetap full width */
-.hero > .mre,
-.hero > .next-program-box {
-  width: 100% !important;
-  max-width: 100% !important;
-}
+/* PERAPI LAYOUT BERANDA */
+.wadah { max-width:1100px; margin:0 auto; padding:50px 20px; }
+.onair { display:inline-block; }
+.hero { display:grid; grid-template-columns:1.6fr 1fr; gap:30px; align-items:start; }
+.next-program-box { background:none; padding:0; }
+.section-title { margin:0 0 12px; }
+@media (max-width:800px) { .hero { grid-template-columns:1fr; } }
 
 
 </style>
@@ -355,6 +351,7 @@
         <a href="https://wa.me/628176901015?text=Halo%20Admin%20Dahlia%20FM%2C%20saya%20mau%20menyampaikan%20saran%2Fkendala%3A%20" target="_blank">Hubungi Kami</a>
       </div>
     </div>
+   <div>
     <h2 class="section-title">Next Program</h2>
 <div class="next-program-box">
   <img id="next-posters"
