@@ -666,9 +666,11 @@ document.addEventListener('keydown', function(e){ if(e.key === 'Escape') tutupMo
 <script>
 (function(){
   var bulan = "Nov 2026";
-  var chart = [
-    { id:"A", label:"Top Hits",    foto:"chart-top-hits-nov2026.jpg" },
-    { id:"B", label:"Top Dangdut", foto:"chart-top-dangdut-nov2026.jpg" }
+   var chart = [
+    { id:"A", label:"Top Hits", foto:"chart-top-hits-nov2026.jpg",
+      slides:["chart-top-hits-nov2026.jpg"] },
+    { id:"B", label:"Top Dangdut", foto:"chart-top-dangdut-nov2026.jpg",
+      slides:["chart-top-dangdut-nov2026.jpg","penyiar-top-dangdut-minul.jpg","DIWAN-MD.jpg"] }
   ];
 
   document.getElementById('chartJudul').textContent = "Top Lagu " + bulan;
@@ -683,11 +685,7 @@ document.addEventListener('keydown', function(e){ if(e.key === 'Escape') tutupMo
     img.alt = c.label + " " + bulan;
     img.onload = function(){
       kotak.textContent = '';
-      kotak.appendChild(img);
-      kotak.onclick = function(){
-        besar.src = c.foto;
-        besar.alt = img.alt;
-        modal.classList.add('buka');
+                  bukaSlide(c, 0);
       };
     };
     img.src = c.foto;
@@ -696,6 +694,65 @@ document.addEventListener('keydown', function(e){ if(e.key === 'Escape') tutupMo
   function tutup(){ modal.classList.remove('buka'); }
   document.getElementById('chartTutup').onclick = tutup;
   modal.onclick = function(e){ if(e.target === modal) tutup(); };
+  
+    var slideAktif = [], idx = 0, judulAktif = '';
+
+    var btnPrev = document.createElement('button');
+    btnPrev.className = 'chart-nav chart-prev';
+    btnPrev.innerHTML = '&#8249;';
+    btnPrev.setAttribute('aria-label', 'Sebelumnya');
+
+    var btnNext = document.createElement('button');
+    btnNext.className = 'chart-nav chart-next';
+    btnNext.innerHTML = '&#8250;';
+    btnNext.setAttribute('aria-label', 'Berikutnya');
+
+    var hitung = document.createElement('div');
+    hitung.className = 'chart-hitung';
+
+    modal.appendChild(btnPrev);
+    modal.appendChild(btnNext);
+    modal.appendChild(hitung);
+
+    function tampil(){
+      besar.src = slideAktif[idx];
+      besar.alt = judulAktif + ' (' + (idx + 1) + ')';
+      hitung.textContent = (idx + 1) + ' / ' + slideAktif.length;
+      var banyak = slideAktif.length > 1;
+      btnPrev.style.display = banyak ? '' : 'none';
+      btnNext.style.display = banyak ? '' : 'none';
+      hitung.style.display  = banyak ? '' : 'none';
+    }
+
+    function geser(n){
+      idx = (idx + n + slideAktif.length) % slideAktif.length;
+      tampil();
+    }
+
+    function bukaSlide(c, i){
+      slideAktif = c.slides;
+      judulAktif = c.label + ' ' + bulan;
+      idx = i;
+      tampil();
+      modal.classList.add('buka');
+    }
+
+    btnPrev.onclick = function(e){ e.stopPropagation(); geser(-1); };
+    btnNext.onclick = function(e){ e.stopPropagation(); geser(1); };
+
+    document.addEventListener('keydown', function(e){
+      if (!modal.classList.contains('buka')) return;
+      if (e.key === 'ArrowLeft')  geser(-1);
+      if (e.key === 'ArrowRight') geser(1);
+      if (e.key === 'Escape')     tutup();
+    });
+
+    var sentuhX = 0;
+    modal.addEventListener('touchstart', function(e){ sentuhX = e.changedTouches[0].clientX; });
+    modal.addEventListener('touchend', function(e){
+      var selisih = e.changedTouches[0].clientX - sentuhX;
+      if (Math.abs(selisih) > 50 && slideAktif.length > 1) geser(selisih < 0 ? 1 : -1);
+    });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') tutup(); });
 })();
 </script>
