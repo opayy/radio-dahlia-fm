@@ -678,14 +678,16 @@ document.addEventListener('keydown', function(e){ if(e.key === 'Escape') tutupMo
   var modal = document.getElementById('chartModal');
   var besar = document.getElementById('chartBesar');
 
-  chart.forEach(function(c){
+    chart.forEach(function(c){
     var kotak = document.getElementById('chart' + c.id);
     document.getElementById('chartLabel' + c.id).textContent = c.label;
     var img = new Image();
     img.alt = c.label + " " + bulan;
     img.onload = function(){
       kotak.textContent = '';
-                  bukaSlide(c, 0);
+      kotak.appendChild(img);
+      kotak.onclick = function(){
+        bukaSlide(c, 0);
       };
     };
     img.src = c.foto;
