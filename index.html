@@ -643,5 +643,42 @@ document.addEventListener('keydown', function(e){ if(e.key === 'Escape') tutupMo
 
 <script src="jadwal.js"></script>
 <script src="next-program.js"></script>
+
+<script>
+(function(){
+  var bulan = "Nov 2026";
+  var chart = [
+    { id:"A", label:"Top Hits",    foto:"chart-top-hits-nov2026.jpg" },
+    { id:"B", label:"Top Dangdut", foto:"chart-top-dangdut-nov2026.jpg" }
+  ];
+
+  document.getElementById('chartJudul').textContent = "Top Lagu " + bulan;
+
+  var modal = document.getElementById('chartModal');
+  var besar = document.getElementById('chartBesar');
+
+  chart.forEach(function(c){
+    var kotak = document.getElementById('chart' + c.id);
+    document.getElementById('chartLabel' + c.id).textContent = c.label;
+    var img = new Image();
+    img.alt = c.label + " " + bulan;
+    img.onload = function(){
+      kotak.textContent = '';
+      kotak.appendChild(img);
+      kotak.onclick = function(){
+        besar.src = c.foto;
+        besar.alt = img.alt;
+        modal.classList.add('buka');
+      };
+    };
+    img.src = c.foto;
+  });
+
+  function tutup(){ modal.classList.remove('buka'); }
+  document.getElementById('chartTutup').onclick = tutup;
+  modal.onclick = function(e){ if(e.target === modal) tutup(); };
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') tutup(); });
+})();
+</script>
 </body>
 </html>
