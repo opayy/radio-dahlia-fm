@@ -336,6 +336,16 @@
 .chart-next { right:16px; }
 .chart-hitung { position:absolute; bottom:14px; left:50%; transform:translateX(-50%); background:rgba(0,0,0,.6); color:#fff; font-size:14px; padding:4px 14px; border-radius:20px; }
 @media (max-width:700px) { .chart-nav { width:40px; height:40px; font-size:26px; } .chart-prev { left:6px; } .chart-next { right:6px; } }
+
+/* PROGRAM: SLIDER */
+.prog-track { display:flex; gap:20px; overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; scrollbar-width:none; padding:4px 0; }
+.prog-track::-webkit-scrollbar { display:none; }
+.prog-slide { flex:0 0 45%; aspect-ratio:16/9; border-radius:14px; overflow:hidden; border:3px solid #fff; background:#111; scroll-snap-align:start; }
+.prog-slide img { width:100%; height:100%; object-fit:cover; display:block; }
+.prog-dots { display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-top:18px; }
+.prog-dot { width:10px; height:10px; border-radius:50%; border:0; padding:0; background:rgba(255,255,255,.45); cursor:pointer; }
+.prog-dot.aktif { background:#fff; transform:scale(1.35); }
+@media (max-width:700px) { .prog-slide { flex-basis:88%; } }
 </style>
 </head>
 <body>
@@ -420,12 +430,8 @@
 <div class="program" id="program">
   <div class="wadah tengah">
     <h2>Program</h2>
-    <div class="grid">
-      <div class="poster">GANTI nama program 1</div>
-      <div class="poster">GANTI nama program 2</div>
-      <div class="poster">GANTI nama program 3</div>
-      <div class="poster">GANTI nama program 4</div>
-    </div>
+    <div class="prog-track" id="progTrack"></div>
+    <div class="prog-dots" id="progDots"></div>
   </div>
 </div>
 
@@ -756,6 +762,69 @@ document.addEventListener('keydown', function(e){ if(e.key === 'Escape') tutupMo
       if (Math.abs(selisih) > 50 && slideAktif.length > 1) geser(selisih < 0 ? 1 : -1);
     });
   document.addEventListener('keydown', function(e){ if(e.key === 'Escape') tutup(); });
+})();
+</script>
+
+<script>
+(function(){
+  var dir = "img/program/";
+  var daftar = [
+    "prog-bergadang","prog-goyang-priangan","prog-obsesi-pagi","prog-kopi-dangdut",
+    "prog-bandar-dangdut-dahlia","prog-dongeng-sunda","prog-dahlia-tatar-sunda",
+    "prog-dahlia-indonesia-pilihan","prog-dip-nonstop","prog-dahlia-indonesia-asik",
+    "prog-kontak-indonesia-pop","prog-yang-digoyang","prog-mandi-madu-dahlia",
+    "prog-cari-jodoh-dahlia","prog-wakuncar","prog-goyang-pantura",
+    "prog-wayang-golek-dahlia","prog-godain-dahlia","prog-top-dangdut-dahlia",
+    "prog-si-cepot-ngagoda","prog-karmila","prog-top-hits-dahlia",
+    "prog-cindai-dahlia","prog-maung-garuda","prog-panggung-dangdut-dahlia"
+  ];
+  var track = document.getElementById('progTrack');
+  var dots = document.getElementById('progDots');
+  var dotEls = [], idx = 0, jeda = false;
+
+  daftar.forEach(function(n, i){
+    var s = document.createElement('div');
+    s.className = 'prog-slide';
+    var im = document.createElement('img');
+    im.src = dir + n + '.jpg';
+    im.alt = n.replace('prog-','').replace(/-/g,' ');
+    im.loading = 'lazy';
+    s.appendChild(im);
+    track.appendChild(s);
+
+    var d = document.createElement('button');
+    d.className = 'prog-dot';
+    d.setAttribute('aria-label','Program ' + (i+1));
+    d.onclick = function(){ pergi(i); };
+    dots.appendChild(d);
+    dotEls.push(d);
+  });
+
+  function pergi(i){
+    idx = i;
+    var s = track.children[i];
+    track.scrollTo({ left: s.offsetLeft - track.offsetLeft, behavior:'smooth' });
+    tandai();
+  }
+  function tandai(){
+    dotEls.forEach(function(d,k){ d.classList.toggle('aktif', k === idx); });
+  }
+
+  track.addEventListener('scroll', function(){
+    var w = track.children[0].offsetWidth + 20;
+    var i = Math.round(track.scrollLeft / w);
+    if (i !== idx && i >= 0 && i < daftar.length){ idx = i; tandai(); }
+  }, {passive:true});
+
+  ['mouseenter','touchstart'].forEach(function(e){ track.addEventListener(e, function(){ jeda = true; }, {passive:true}); });
+  ['mouseleave','touchend'].forEach(function(e){ track.addEventListener(e, function(){ jeda = false; }, {passive:true}); });
+
+  setInterval(function(){
+    if (jeda) return;
+    pergi((idx + 1) % daftar.length);
+  }, 4000);
+
+  tandai();
 })();
 </script>
 </body>
